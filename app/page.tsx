@@ -56,6 +56,7 @@ function useMousePosition() {
 export default function Home() {
   const [hasRevealed, setHasRevealed] = useState(false);
   const [centerIsBlue, setCenterIsBlue] = useState(true);
+  const [hasClickedFallAsleep, setHasClickedFallAsleep] = useState(false);
   const mousePos = useMousePosition();
 
   const handleReveal = useCallback(() => {
@@ -135,10 +136,17 @@ export default function Home() {
           href={FALL_ASLEEP_LINK}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
-          className="fixed bottom-3 right-3 px-2 py-1.5 text-[10px] font-medium rounded bg-[#1db954] text-white hover:bg-[#1ed760] active:scale-[0.98] transition-all z-10"
+          onClick={(e) => {
+            e.stopPropagation();
+            setHasClickedFallAsleep(true);
+          }}
+          className={`fixed bottom-3 right-3 px-2 py-1.5 text-[10px] font-medium rounded active:scale-[0.98] transition-all z-10 ${
+            hasClickedFallAsleep
+              ? "bg-purple-600 text-white hover:bg-purple-500"
+              : "bg-[#1db954] text-white hover:bg-[#1ed760]"
+          }`}
         >
-          Fall Asleep Instantly
+          {hasClickedFallAsleep ? "jk" : "Fall Asleep Instantly"}
         </a>
       )}
     </div>
